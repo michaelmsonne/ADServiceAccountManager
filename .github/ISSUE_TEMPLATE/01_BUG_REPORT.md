@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-about: Create a report to help TEMPLATE to improve
+about: Create a report to help ADServiceAccountManager to improve
 title: "bug: "
 labels: "bug"
 assignees: ""
