@@ -111,7 +111,13 @@ Outline the file contents of the repository. It helps users navigate the codebas
 
 To be continued...
 
-![Sample Screenshot](./docs/Managed%20Identity%20Permission%20Manager.png)
+![Main gMSA UI](./docs/pictures/main%20gmsa.png)
+
+![Main SSA UI](./docs/pictures/main%20ssa.png)
+
+![Main Domain UI](./docs/pictures/main%20domaininfo.png)
+
+![Main menu UI](./docs/pictures/main%20menu.png)
 
 This tool offers an extensive set of features that cater to the needs of administrators, making it an indispensable resource for managing service accounts in an Active Directory environment.
 
