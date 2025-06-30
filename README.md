@@ -34,6 +34,12 @@ The AD ServiceAccount Manager is a powerful PowerShell script and tool designed 
 
 It simplifies the creation, modification, and removal of both Group Managed Service Accounts (gMSA) and Standard Accounts (SSA), but also the migration to gSMA!.
 
+I originally built this tool for internal use — it solved a very specific pain point for managing accounts across domains and OUs at a previous job.
+
+Some sneak peak fro the original private repo: 
+
+![Private repo](./docs/pictures/original%20repo.png)
+
 Your feedback and support are always welcome! 🤩🤘
 
 ## Why this tool is needed in the community
