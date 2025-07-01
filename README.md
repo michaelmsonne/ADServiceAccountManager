@@ -36,7 +36,7 @@ It simplifies the creation, modification, and removal of both Group Managed Serv
 
 I originally built this tool for internal use — it solved a very specific pain point for managing accounts across domains and OUs at a previous job.
 
-Some sneak peak fro the original private repo: 
+Some sneak peak from the original private repo: 
 
 ![Private repo](./docs/pictures/original%20repo.png)
 
