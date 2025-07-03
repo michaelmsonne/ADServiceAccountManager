@@ -4,7 +4,7 @@
 
 $global:darkModeStateUI
 
-$global:FormVersion = "1.0.15.0"
+$global:FormVersion = "1.0.16.0"
 $global:Author = "Michael Morten Sonne"
 $global:ToolName = "AD ServiceAccount Manager"
 $global:AuthorEmail = ""

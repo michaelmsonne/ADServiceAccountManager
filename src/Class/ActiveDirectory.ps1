@@ -289,6 +289,34 @@ function Get-WindowsServerVersion
 		else { 'Windows Server N/A' })
 }
 
+# NOT IN USE FOR NOW
+# Function to get stale AD user objects
+Function Get-StaleADUsers
+{
+	param (
+		[int]$Days
+	)
+	
+	$staleUsers = Get-ADUser -Filter * -Properties SamAccountName, Enabled, LastLogonDate |
+	Where-Object { $_.Enabled -and $_.LastLogonDate -lt (Get-Date).AddDays(-$Days) }
+	
+	return $staleUsers
+}
+
+# Function to get stale AD computer objects
+Function Get-StaleADComputers
+{
+	param (
+		[int]$Days
+	)
+	
+	$staleComputers = Search-ADAccount -AccountInactive -ComputersOnly -TimeSpan (New-TimeSpan -Days $Days) |
+	Where-Object { $_.Name -notlike "*AZUREADSSOACC*" }
+	
+	return $staleComputers
+}
+# NOT IN USE FOR NOW
+
 function Show-DomainInfo
 {
 	Try
@@ -593,31 +621,3 @@ function Show-DomainInfo
 		$exportDataToolStripMenuItem.Enabled = $false
 	}
 }
-
-# NOT IN USE FOR NOW
-# Function to get stale AD user objects
-Function Get-StaleADUsers
-{
-	param (
-		[int]$Days
-	)
-	
-	$staleUsers = Get-ADUser -Filter * -Properties SamAccountName, Enabled, LastLogonDate |
-	Where-Object { $_.Enabled -and $_.LastLogonDate -lt (Get-Date).AddDays(-$Days) }
-	
-	return $staleUsers
-}
-
-# Function to get stale AD computer objects
-Function Get-StaleADComputers
-{
-	param (
-		[int]$Days
-	)
-	
-	$staleComputers = Search-ADAccount -AccountInactive -ComputersOnly -TimeSpan (New-TimeSpan -Days $Days) |
-	Where-Object { $_.Name -notlike "*AZUREADSSOACC*" }
-	
-	return $staleComputers
-}
-# NOT IN USE FOR NOW
