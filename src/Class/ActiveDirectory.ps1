@@ -231,6 +231,64 @@ function ConvertFrom-DistinguishedName
 	}
 }
 
+function Get-WindowsServerVersion
+{
+	<#
+	.SYNOPSIS
+	    Gets the Windows Server version based on Active Directory schema version.
+
+	.DESCRIPTION
+	    This function maps Active Directory schema version numbers to their corresponding 
+	    Windows Server versions. The schema version is obtained from the objectVersion 
+	    attribute in Active Directory and is updated with each major Windows Server release.
+
+	.PARAMETER SchemaVersion
+	    The Active Directory schema version number as a string. This corresponds to the 
+	    objectVersion attribute found in the Active Directory schema.
+
+	.OUTPUTS
+	    String
+	    Returns the corresponding Windows Server version name. If the schema version is 
+	    not recognized, returns 'Windows Server N/A'.
+
+	.EXAMPLE
+	    Get-WindowsServerVersion -SchemaVersion "91"
+	    Returns: "Windows Server 2025"
+
+	.EXAMPLE
+	    Get-WindowsServerVersion -SchemaVersion "88"
+	    Returns: "Windows Server 2019/2022"
+
+	.FUNCTIONALITY
+    	Active Directory Schema Version Detection
+	#>
+	
+	param ([string]$SchemaVersion)
+	
+	# Reference: https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/deploy/find-active-directory-schema?tabs=gui#mapping-the-objectversion-attribute
+	
+	# Define a hashtable mapping Active Directory schema version numbers to Windows Server versions
+	# The schema version corresponds to the objectVersion attribute in Active Directory
+	# Each major Windows Server release updates the AD schema with a new version number
+	$ServerVersions = @{
+		'91' = 'Windows Server 2025' 		# Latest version as of 2025
+		'88' = 'Windows Server 2019/2022' 	# Schema version 88 is shared between 2019 and 2022
+		'87' = 'Windows Server 2016' 		# First version to support many modern AD features
+		'69' = 'Windows Server 2012 R2' 	# Introduced significant AD improvements
+		'56' = 'Windows Server 2012' 		# Major AD schema update from 2012
+		'47' = 'Windows Server 2008 R2' 	# Enhanced AD features and PowerShell integration
+		'44' = 'Windows Server 2008' 		# First version with significant schema changes
+		'31' = 'Windows Server 2003 R2' 	# R2 release with additional features
+		'30' = 'Windows Server 2003' 		# Legacy version, basic AD functionality
+	}
+	
+	# Return the corresponding Windows Server version if the schema version exists in our hashtable
+	# If the schema version is not found (unknown/unsupported version), return 'Windows Server N/A'
+	# This handles cases where the AD schema might be from an unsupported or future version
+	return $(if ($ServerVersions[$SchemaVersion]) { $ServerVersions[$SchemaVersion] }
+		else { 'Windows Server N/A' })
+}
+
 function Show-DomainInfo
 {
 	Try
@@ -358,18 +416,8 @@ function Show-DomainInfo
 		$ADForest = (Get-ADForest).ForestMode
 		$ADDomain = (Get-ADDomain).DomainMode
 		$ADVer = Get-ADObject (Get-ADRootDSE).schemaNamingContext -property objectVersion | Select-Object objectVersion
-		$ADNUM = $ADVer -replace "@{objectVersion=", "" -replace "}", ""
-		
-		If ($ADNum -eq '91') { $srv = 'Windows Server 2025' }
-		elseif ($ADNum -eq '88') { $srv = 'Windows Server 2019' }
-		ElseIf ($ADNum -eq '87') { $srv = 'Windows Server 2016' }
-		ElseIf ($ADNum -eq '69') { $srv = 'Windows Server 2012 R2' }
-		ElseIf ($ADNum -eq '56') { $srv = 'Windows Server 2012' }
-		ElseIf ($ADNum -eq '47') { $srv = 'Windows Server 2008 R2' }
-		ElseIf ($ADNum -eq '44') { $srv = 'Windows Server 2008' }
-		ElseIf ($ADNum -eq '31') { $srv = 'Windows Server 2003 R2' }
-		ElseIf ($ADNum -eq '30') { $srv = 'Windows Server 2003' }
-		Else { $srv = 'Windows Server N/A' }
+		$ADNUM = $ADVer -replace "@{objectVersion=", "" -replace "}", ""		
+		$srv = Get-WindowsServerVersion -SchemaVersion $ADNum
 		
 		# Check whether SYSVOL is using FRS or DFSR
 		if ($searchFRS.FindAll().Count -eq '0')

@@ -1,3 +1,14 @@
+## [1.0.16.0] - xx-xx-xx
+
+### Add
+- Added
+
+### Changed
+- Changed the code for getting Windows Server Version in class ActiveDirectory.ps1 - Thanks to my friend @[Harm Veenstra](https://github.com/HarmVeenstra) for the tip
+
+### Fixed
+- Fix 
+
 ## [1.0.15.0] - 29-06-2025
 
 ### First public release at GitHub! 🎉
