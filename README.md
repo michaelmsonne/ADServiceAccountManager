@@ -66,10 +66,10 @@ Outline the file contents of the repository. It helps users navigate the codebas
 | `\exports`        | Exports in raw PowerShell code.             |
 | `.gitignore`      | Define what to ignore at commit time.       |
 | `CHANGELOG.md`    | List of changes to the sample.              |
-| `CONTRIBUTING.md` | Guidelines for contributing to the TEMPLATE.|
+| `CONTRIBUTING.md` | Guidelines for contributing to the ADServiceAccountManager.|
 | `README.md`       | This README file.                           |
 | `SECURITY.md`     | This README file.                           |
-| `LICENSE`         | The license for the TEMPLATE.               |
+| `LICENSE`         | The license for the ADServiceAccountManager.|
 
 There is over 6000 lines of Powershell code 😆
 
