@@ -71,6 +71,8 @@ Outline the file contents of the repository. It helps users navigate the codebas
 | `SECURITY.md`     | This README file.                           |
 | `LICENSE`         | The license for the TEMPLATE.               |
 
+There is over 6000 lines of Powershell code 😆
+
 ## 🚀 Features
 
 ### Group Managed Service Accounts (gMSA)
